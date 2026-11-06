@@ -1,0 +1,54 @@
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(36px, 6vw, 96px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(44px, 8vw, 70px) var(--gap);
+}
+
+.all {
+  margin-top: clamp(40px, 6vw, 80px);
+}
+
+/* tablet: two equal columns */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+/* desktop: staggered editorial grid; each card owns its own column span and offset */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    row-gap: clamp(60px, 7.5vw, 130px);
+  }
+  .item[data-i="0"] {
+    grid-column: 1 / 8;
+  }
+  .item[data-i="1"] {
+    grid-column: 9 / 13;
+    margin-top: clamp(80px, 12vw, 200px);
+  }
+  .item[data-i="2"] {
+    grid-column: 2 / 7;
+  }
+  .item[data-i="3"] {
+    grid-column: 8 / 13;
+    margin-top: clamp(40px, 7vw, 120px);
+  }
+  .item[data-i="4"] {
+    grid-column: 1 / 8;
+  }
+  .item[data-i="5"] {
+    grid-column: 9 / 13;
+    margin-top: clamp(60px, 10vw, 170px);
+  }
+}

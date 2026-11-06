@@ -1,0 +1,66 @@
+.svg {
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+}
+
+.node rect:first-child {
+  fill: var(--bg);
+  stroke: var(--rule-strong);
+  stroke-width: 1.2;
+}
+.node[data-kind="service"] rect:first-child {
+  stroke: var(--ink);
+}
+.node[data-kind="store"] rect:first-child {
+  fill: var(--surface);
+}
+.node[data-kind="ai"] rect:first-child {
+  stroke: var(--accent);
+}
+.tick {
+  fill: var(--ink-3);
+}
+.node[data-kind="ai"] .tick,
+.node[data-kind="service"] .tick {
+  fill: var(--accent);
+}
+
+.label {
+  fill: currentColor;
+  font: 650 15.5px var(--font-body);
+}
+.sub {
+  fill: var(--ink-2);
+  font: 450 10.5px var(--font-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.edge {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.4;
+}
+.head {
+  fill: var(--ink-2);
+}
+.edgeLabel {
+  fill: var(--ink-3);
+  font: 450 10.5px var(--font-label);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.boundary {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+  stroke-dasharray: 6 6;
+}
+.boundaryLabel {
+  fill: var(--accent);
+  font: 500 10.5px var(--font-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

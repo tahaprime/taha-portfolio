@@ -1,0 +1,10 @@
+{
+  "evidence_id": "ev_96f2efc97d60260a76def192d4fc657895ec49db6b9ee7473c4bb658ee10336a",
+  "scenario_sha256": "bf2c65c2a02451a42a32ad13a28606c005f071ac264c1f7e90210eefe7b66f30",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "device_scale_factor": 1
+  },
+  "steps": 18
+}

@@ -1,0 +1,56 @@
+.card {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.meta span:first-child {
+  white-space: nowrap;
+}
+.meta span:last-child {
+  text-align: right;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+/* the whole card is the click target */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+.link:focus-visible {
+  outline: none;
+}
+.card:has(.link:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: var(--radius);
+}
+
+.arrow {
+  flex: none;
+  width: 44px;
+  height: auto;
+  transition: transform 0.4s var(--ease-out);
+}
+.card:hover .arrow {
+  transform: translateX(8px);
+}

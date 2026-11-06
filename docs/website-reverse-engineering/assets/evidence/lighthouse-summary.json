@@ -1,0 +1,74 @@
+[
+  {
+    "page": "http://localhost:4173/",
+    "form_factor": "mobile",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "FCP": "0.9 s",
+      "LCP": "0.9 s",
+      "TBT": "10 ms",
+      "CLS": "0.041",
+      "SpeedIndex": "2.7 s"
+    },
+    "lighthouse": "13.6.0"
+  },
+  {
+    "page": "http://localhost:4173/",
+    "form_factor": "desktop",
+    "scores": {
+      "performance": 98,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "FCP": "0.2 s",
+      "LCP": "0.2 s",
+      "TBT": "0 ms",
+      "CLS": "0.005",
+      "SpeedIndex": "1.5 s"
+    },
+    "lighthouse": "13.6.0"
+  },
+  {
+    "page": "http://localhost:4173/projects/safetrack/",
+    "form_factor": "mobile",
+    "scores": {
+      "performance": 95,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "FCP": "0.9 s",
+      "LCP": "2.9 s",
+      "TBT": "10 ms",
+      "CLS": "0",
+      "SpeedIndex": "2.3 s"
+    },
+    "lighthouse": "13.6.0"
+  },
+  {
+    "page": "http://localhost:4173/projects/",
+    "form_factor": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best_practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "FCP": "0.9 s",
+      "LCP": "0.9 s",
+      "TBT": "10 ms",
+      "CLS": "0.007",
+      "SpeedIndex": "2.5 s"
+    },
+    "lighthouse": "13.6.0"
+  }
+]

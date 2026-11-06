@@ -1,0 +1,347 @@
+{
+ "base": "http://localhost:4173",
+ "tests": {
+  "T01_loader_gate": {
+   "early": {
+    "cls": "CjNgrG_variable jB_leq_variable iQsMfW_variable js-motion show-loader",
+    "theme": "light",
+    "loader": "grid"
+   },
+   "loaderDoneMs": 3197,
+   "after": {
+    "cls": "CjNgrG_variable jB_leq_variable iQsMfW_variable js-motion lenis",
+    "boot": "1",
+    "lenis": true,
+    "heroOpacity": "1"
+   },
+   "secondVisit": {
+    "showLoader": false,
+    "jsMotion": true
+   }
+  },
+  "T02_theme": {
+   "before": "light",
+   "afterClick": {
+    "theme": "dark",
+    "stored": "dark",
+    "pressed": "true",
+    "bg": "rgb(13, 14, 16)"
+   },
+   "persistedAfterReload": "dark",
+   "systemDarkNoStorage": "dark"
+  },
+  "T03_header": {
+   "down": [
+    {
+     "y": 259,
+     "hidden": "false"
+    },
+    {
+     "y": 519,
+     "hidden": "true"
+    },
+    {
+     "y": 779,
+     "hidden": "true"
+    },
+    {
+     "y": 1039,
+     "hidden": "true"
+    },
+    {
+     "y": 1299,
+     "hidden": "true"
+    }
+   ],
+   "up": [
+    {
+     "y": 1101,
+     "hidden": "false"
+    },
+    {
+     "y": 901,
+     "hidden": "false"
+    }
+   ]
+  },
+  "T04_navigation": {
+   "curtainMid": {
+    "curtainTransform": "matrix(1, 0, 0, 1, 0, 1074.47)",
+    "visibility": "visible",
+    "label": "→ /projects/"
+   },
+   "urlChangedMs": 807,
+   "after": {
+    "url": "/projects/",
+    "active": "main",
+    "title": "Work — Taha Hoummadi",
+    "scrollY": 0,
+    "curtainHidden": "hidden"
+   },
+   "caseStudy": {
+    "h1": "SafeTrackSafeTrack",
+    "title": "SafeTrack — Taha Hoummadi"
+   },
+   "afterBack": {
+    "url": "/projects/",
+    "visibleH1": true
+   }
+  },
+  "T05_distortion": {
+   "idleDrawsPerSecAtTopOfPage": 0,
+   "canvasWhileHovering": {
+    "exists": true,
+    "pointerEvents": "none",
+    "opacity": "1",
+    "w": 779,
+    "h": 519
+   },
+   "drawsDuringHover": 45,
+   "hitTargetAtCardCenter": {
+    "tag": "A",
+    "cls": "FK4eqW_link",
+    "link": true
+   },
+   "canvasRemovedAfterLeave": true,
+   "idleDrawsPerSecAfterSettle": 0
+  },
+  "T06_magnetic": {
+   "rect": {
+    "w": 114,
+    "h": 41
+   },
+   "samples": [
+    {
+     "label": "0.5w right",
+     "transform": "matrix(1, 0, 0, 1, 19.9008, 0)"
+    },
+    {
+     "label": "far (3w)",
+     "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    }
+   ]
+  },
+  "T07_projects_hover": {
+   "rows": 6,
+   "hover": {
+    "pv": [
+     1,
+     1,
+     1
+    ],
+    "siblingOpacity": 0.4
+   },
+   "afterLeave": {
+    "pv": [
+     0,
+     0,
+     0
+    ],
+    "siblingOpacity": 1
+   },
+   "keyboardFocus": {
+    "activeText": "SafeTrack: AI-assisted autonom",
+    "pv": [
+     1,
+     1,
+     1
+    ]
+   }
+  },
+  "T08_case_study": {
+   "unknownSlug": {
+    "title": "Page not found — Taha Hoummadi",
+    "h1": "404404"
+   },
+   "info": {
+    "h1": "AI Health AssistantAI Health Assistant",
+    "slides": 2,
+    "svgTitle": "AI Health Assistant: Conceptual architecture of the stated stack",
+    "svgDesc": "React and Node.js; Node.js to PostgreSQL; Node.js to RAG; RAG to LLM",
+    "metrics": [
+     "87%",
+     "4.2/5"
+    ],
+    "stack": [
+     "Stack",
+     "Let’s build systems that last.Let’s build systems that last."
+    ],
+    "pager": [
+     "/projects/safetrack/",
+     "/projects/",
+     "/projects/reservensam/"
+    ]
+   },
+   "galleryScrollLeftAfterNext": 1120
+  },
+  "T09_reduced_motion": {
+   "early": {
+    "cls": "CjNgrG_variable jB_leq_variable iQsMfW_variable",
+    "loader": "none",
+    "heroOpacity": "1",
+    "hidden": 0,
+    "total": 28
+   },
+   "later": {
+    "lenis": false,
+    "hiddenAfter": 0,
+    "curtain": "hidden"
+   },
+   "navigationMsNoCurtain": 82
+  },
+  "T10_mobile": {
+   "hero": {
+    "overflowX": 0,
+    "hover": false,
+    "navDisplay": "none",
+    "menuBtn": true,
+    "menuBtnSize": [
+     52,
+     44
+    ]
+   },
+   "menuOpen": {
+    "expanded": "true",
+    "links": [
+     "Home",
+     "Work",
+     "About",
+     "Journey",
+     "tahahoummadi@gmail.com"
+    ],
+    "inert": false
+   },
+   "menuClosed": {
+    "expanded": "false",
+    "inert": true
+   },
+   "horizontalOverflowPx": {
+    "/projects/": 0,
+    "/projects/pyramid/": 0
+   }
+  },
+  "T11_keyboard": {
+   "firstTabStop": {
+    "text": "Skip to content",
+    "cls": "skip-link"
+   },
+   "afterSkipActivate": {
+    "activeId": "main",
+    "hash": "#main"
+   },
+   "tabOrder": [
+    {
+     "t": "Skip to content",
+     "outline": true
+    },
+    {
+     "t": "Taha Hoummadi, home",
+     "outline": true
+    },
+    {
+     "t": "Work06",
+     "outline": true
+    },
+    {
+     "t": "About",
+     "outline": true
+    },
+    {
+     "t": "Journey",
+     "outline": true
+    },
+    {
+     "t": "Email me",
+     "outline": true
+    },
+    {
+     "t": "Dark theme",
+     "outline": true
+    },
+    {
+     "t": "View projects ↓",
+     "outline": true
+    },
+    {
+     "t": "Get in touch",
+     "outline": true
+    }
+   ]
+  },
+  "T12_links": {
+   "internalChecked": 8,
+   "internalNon200": [],
+   "anchorTargetsMissingOnHome": [],
+   "external": [
+    "mailto:tahahoummadi@gmail.com",
+    "https://github.com/tahaprime",
+    "https://linkedin.com/in/taha-hoummadi",
+    "https://github.com/tahaprime/Pyramidj",
+    "https://github.com/tahaprime/Pyramidmobile"
+   ],
+   "externalWithoutBlankNoopener": []
+  },
+  "T13_axe": {
+   "light /": {
+    "violations": [],
+    "passes": 46,
+    "incomplete": [
+     "color-contrast"
+    ]
+   },
+   "light /projects/": {
+    "violations": [],
+    "passes": 41,
+    "incomplete": [
+     "color-contrast"
+    ]
+   },
+   "light /projects/health-assistant/": {
+    "violations": [],
+    "passes": 47,
+    "incomplete": [
+     "color-contrast"
+    ]
+   },
+   "light /this-page-does-not-exist": {
+    "violations": [],
+    "passes": 41,
+    "incomplete": [
+     "color-contrast"
+    ]
+   },
+   "dark /": {
+    "violations": [],
+    "passes": 46,
+    "incomplete": [
+     "color-contrast"
+    ]
+   },
+   "dark /projects/": {
+    "violations": [],
+    "passes": 41,
+    "incomplete": [
+     "color-contrast"
+    ]
+   },
+   "dark /projects/health-assistant/": {
+    "violations": [],
+    "passes": 47,
+    "incomplete": [
+     "color-contrast"
+    ]
+   },
+   "dark /this-page-does-not-exist": {
+    "violations": [],
+    "passes": 41,
+    "incomplete": [
+     "color-contrast"
+    ]
+   }
+  }
+ },
+ "consoleAndNetworkIssues": [
+  "[http 404] http://localhost:4173/projects/ai-nope/",
+  "[error] Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ]
+}

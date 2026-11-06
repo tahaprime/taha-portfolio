@@ -1,0 +1,27 @@
+.plate {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--plate-paper);
+  isolation: isolate;
+}
+
+.plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Caption chip: sits above the WebGL canvas, which is appended later in the DOM. */
+.fig {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: var(--plate-paper);
+  color: var(--plate-ink);
+  font-size: 0.6875rem;
+  pointer-events: none;
+}

@@ -1,0 +1,14 @@
+.toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: transform 0.5s var(--ease-out);
+}
+.toggle:hover {
+  transform: rotate(180deg);
+}
+.toggle[aria-pressed="true"] svg {
+  transform: scaleX(-1);
+}

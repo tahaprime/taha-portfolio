@@ -1,0 +1,190 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+}
+
+.frame {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 40px) var(--gutter) 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.labels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 32px;
+}
+
+.blurb {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+  text-align: justify;
+  text-indent: 2.6em;
+  color: var(--ink-2);
+  max-width: 36ch;
+}
+
+.title {
+  margin-top: auto;
+  display: grid;
+  gap: 0.02em;
+}
+
+.first {
+  display: block;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: calc(var(--fs-display) * 0.9);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  margin-left: 0.04em;
+}
+
+.last {
+  display: block;
+  font-size: var(--fs-display);
+  margin-left: -0.02em;
+}
+
+.role {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.roleRule {
+  flex: 1;
+}
+.roleText {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: var(--fs-role);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  transition: transform 0.3s var(--ease-out);
+}
+.primary:hover {
+  transform: translateY(-2px);
+}
+.ghost {
+  font-weight: 500;
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+.coords {
+  color: var(--ink-3);
+}
+
+/* registration marks in two corners */
+.cross {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  color: var(--ink-3);
+  background:
+    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+  pointer-events: none;
+}
+.cross[data-pos="a"] {
+  top: calc(var(--header-h) + 10px);
+  right: var(--gutter);
+}
+.cross[data-pos="b"] {
+  bottom: 12px;
+  left: var(--gutter);
+}
+
+@media (min-width: 1024px) {
+  .frame {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto 1fr auto auto auto;
+    column-gap: var(--gap);
+    row-gap: 0;
+  }
+  .labels {
+    grid-column: 1 / 8;
+    grid-row: 1;
+    align-content: start;
+    justify-content: flex-start;
+    gap: 8px 72px;
+  }
+  .blurb {
+    grid-column: 9 / 13;
+    grid-row: 1;
+    justify-self: end;
+  }
+  .title {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 0;
+  }
+  .role {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    margin-top: 18px;
+    padding-bottom: 28px;
+  }
+  .foot {
+    grid-column: 1 / -1;
+    grid-row: 5;
+  }
+}

@@ -1,0 +1,12 @@
+.page {
+  padding-top: calc(var(--header-h) + clamp(48px, 8vw, 120px));
+  padding-bottom: var(--section);
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(32px, 5vw, 72px);
+}

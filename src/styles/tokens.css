@@ -1,0 +1,75 @@
+/*
+ * Design tokens: "Spec Sheet".
+ * Light = "Paper & Cobalt" (default), dark = "Graphite & Saffron".
+ * Every text/background pair below was checked against WCAG AA (≥ 4.5:1).
+ */
+:root {
+  color-scheme: light;
+
+  /* surfaces + ink */
+  --bg: #edeae2;
+  --surface: #e3dfd5;
+  --ink: #12110f; /* 15.7:1 on bg */
+  --ink-2: #4d4a44; /* 7.3:1 */
+  --ink-3: #66625a; /* 5.1:1 */
+  --rule: rgb(18 17 15 / 0.2);
+  --rule-strong: rgb(18 17 15 / 0.42);
+  --accent: #2438f5; /* 5.9:1 on bg */
+  --accent-ink: #ffffff; /* 7.1:1 on accent */
+
+  /* route curtain */
+  --curtain-bg: #12110f;
+  --curtain-ink: #edeae2;
+  --curtain-edge: #2438f5;
+
+  /* specimen plates keep one palette in both themes */
+  --plate-paper: #edeae2;
+  --plate-ink: #12110f;
+  --plate-accent: #2438f5;
+
+  /* type */
+  --font-display: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-accent: var(--font-serif), Georgia, "Times New Roman", serif;
+  --font-label: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --fs-display: clamp(3.2rem, 17vw, 15rem);
+  --fs-role: clamp(1.4rem, 4.2vw, 3.6rem);
+  --fs-h2: clamp(2.5rem, 5.6vw, 5rem);
+  --fs-h3: clamp(1.45rem, 2.5vw, 2.3rem);
+  --fs-lead: clamp(1.05rem, 1.3vw, 1.3rem);
+  --fs-body: 0.9375rem;
+  --fs-label: 0.75rem;
+
+  /* layout */
+  --container: 1560px;
+  --gutter: clamp(18px, 3.2vw, 45px);
+  --gap: 20px;
+  --section: clamp(90px, 9.4vw, 180px);
+  --header-h: 72px;
+  --radius: 10px;
+  --radius-sm: 5px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
+  --t: 0.3s;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0d0e10;
+  --surface: #15171a;
+  --ink: #ece9e2; /* 15.9:1 on bg */
+  --ink-2: #a09d95; /* 7.1:1 */
+  --ink-3: #86837d; /* 5.1:1 */
+  --rule: rgb(236 233 226 / 0.16);
+  --rule-strong: rgb(236 233 226 / 0.4);
+  --accent: #ffb224; /* 10.7:1 on bg */
+  --accent-ink: #0d0e10;
+
+  --curtain-bg: #ece9e2;
+  --curtain-ink: #12110f;
+  --curtain-edge: #ffb224;
+}

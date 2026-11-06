@@ -1,0 +1,83 @@
+/* `display` is controlled globally (.loader / html.show-loader .loader) so the
+ * loader can never block a visitor who has no JS or prefers reduced motion. */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--curtain-bg);
+  color: var(--curtain-ink);
+  will-change: transform;
+}
+
+.frame {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: 100%;
+  height: 100%;
+  padding: 22px var(--gutter);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.center {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 28px;
+}
+
+.digits {
+  display: flex;
+  align-items: flex-start;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variation-settings: "wdth" 75;
+  font-size: clamp(5.5rem, 22vw, 17rem);
+  line-height: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+.digits small {
+  font-size: 0.22em;
+  margin: 0.2em 0 0 0.1em;
+  color: var(--curtain-edge);
+}
+
+.track {
+  width: min(520px, 70vw);
+  height: 2px;
+  background: color-mix(in srgb, var(--curtain-ink) 22%, transparent);
+  overflow: hidden;
+}
+.bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--curtain-edge);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.log {
+  display: flex;
+  gap: 28px;
+  opacity: 0.9;
+}
+.log li {
+  opacity: 0.35;
+  transition: opacity 0.2s;
+}
+.log li::before {
+  content: "○ ";
+}
+.log li[data-on="true"] {
+  opacity: 1;
+}
+.log li[data-on="true"]::before {
+  content: "● ";
+  color: var(--curtain-edge);
+}

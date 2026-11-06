@@ -1,0 +1,27 @@
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  display: grid;
+  place-items: center;
+  background: var(--curtain-bg);
+  color: var(--curtain-ink);
+  visibility: hidden;
+  transform: translateY(100%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Leading edge of the sweeping panel. */
+.curtain::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--curtain-edge);
+}
+
+.label {
+  letter-spacing: 0.12em;
+  opacity: 0;
+}

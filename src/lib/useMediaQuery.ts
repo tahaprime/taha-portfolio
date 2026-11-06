@@ -1,0 +1,20 @@
+"use client";
+
+import { useSyncExternalStore } from "react";
+
+/**
+ * Subscribes to a CSS media query without setState-in-effect. The server snapshot is
+ * `false`, so markup never depends on it during hydration; consumers only use it to
+ * enable enhancements after mount.
+ */
+export function useMediaQuery(query: string): boolean {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia(query);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
+}

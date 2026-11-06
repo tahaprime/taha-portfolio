@@ -1,0 +1,115 @@
+/* Three voices: a heavy condensed grotesque, an italic serif, a mono label. */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variation-settings: "wdth" 75;
+  text-transform: uppercase;
+  line-height: 0.84;
+  letter-spacing: -0.012em;
+}
+
+.serif {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 750;
+  font-variation-settings: "wdth" 78;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.h2 em {
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-style: italic;
+  font-variation-settings: normal;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+
+.h3 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.mono {
+  font-family: var(--font-label);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.45;
+}
+
+.eyebrow {
+  display: inline-flex;
+  gap: 0.6em;
+  align-items: baseline;
+  color: var(--ink-2);
+}
+.eyebrow b {
+  font-weight: 450;
+  color: var(--accent);
+}
+
+.muted {
+  color: var(--ink-2);
+}
+.faint {
+  color: var(--ink-3);
+}
+
+/* Inline text link with an animated underline (no color-only affordance). */
+.link {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+  padding-bottom: 2px;
+  transition: background-size 0.35s var(--ease-out);
+}
+.link:hover {
+  background-size: 0 1px;
+  background-position: 100% 100%;
+}
+
+/* Registration-mark rule: hairline with + end caps. */
+.rule {
+  position: relative;
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--rule-strong);
+  color: var(--ink-2);
+  overflow: visible;
+}
+.rule::before,
+.rule::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  translate: 0 -50%;
+  background:
+    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+}
+.rule::before {
+  left: 0;
+}
+.rule::after {
+  right: 0;
+}

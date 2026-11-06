@@ -1,0 +1,57 @@
+.gallery {
+  display: grid;
+  gap: 18px;
+}
+
+.track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  padding-bottom: 4px;
+}
+.track::-webkit-scrollbar {
+  display: none;
+}
+/* trailing space lets the final slide scroll all the way to the start edge and snap */
+.track::after {
+  content: "";
+  flex: 0 0 max(0px, calc(100% - 1100px));
+}
+
+.slide {
+  flex: 0 0 min(100%, 1100px);
+  scroll-snap-align: start;
+}
+.slide figure {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.controls button {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule-strong);
+  transition: border-color 0.3s ease;
+}
+.controls button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* diagram slide sits in a paper-like frame */
+.slide :global(svg) {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: clamp(12px, 2vw, 28px);
+}

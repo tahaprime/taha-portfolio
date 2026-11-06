@@ -1,0 +1,125 @@
+.list {
+  display: grid;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "idx arrow arrow"
+    "title title title"
+    "tags tags tags";
+  align-items: center;
+  gap: 6px 16px;
+  padding: 22px 0 24px;
+  border-top: 1px solid var(--rule-strong);
+  transition: opacity 0.3s ease;
+}
+.row:last-child {
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+/* siblings dim while one row is active */
+.list:has([data-active]) .row:not([data-active]) {
+  opacity: 0.4;
+}
+
+.idx {
+  grid-area: idx;
+}
+.title {
+  grid-area: title;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variation-settings: "wdth" 75;
+  font-size: clamp(2.5rem, 9.5vw, 7.2rem);
+  line-height: 0.92;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.tags {
+  grid-area: tags;
+}
+.arrow {
+  grid-area: arrow;
+  justify-self: end;
+  width: clamp(36px, 4vw, 64px);
+  height: auto;
+  transition: transform 0.4s var(--ease-out);
+}
+.row:hover .arrow,
+.row[data-active] .arrow {
+  transform: translateX(10px);
+}
+
+/* the whole row is the click target */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.link:focus-visible {
+  outline: none;
+}
+.row:has(.link:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+@media (min-width: 1024px) {
+  .row {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-areas: "idx title title title title title title title tags tags tags arrow";
+    column-gap: var(--gap);
+    padding: 28px 0 32px;
+  }
+  .tags {
+    text-align: right;
+  }
+}
+
+/* hover cluster */
+.preview {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.pv {
+  position: absolute;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.pvA {
+  left: 5vw;
+  top: 17vh;
+  width: clamp(190px, 22vw, 380px);
+  rotate: -2deg;
+}
+.pvB {
+  left: 47vw;
+  top: 60vh;
+  width: clamp(140px, 14vw, 250px);
+  rotate: 3deg;
+}
+.pvC {
+  right: 6vw;
+  top: 21vh;
+  width: clamp(190px, 18vw, 300px);
+  display: grid;
+  gap: 10px;
+  padding: 16px 18px 18px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  rotate: 1.5deg;
+}
+.spec {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+.zoom img {
+  transform: scale(1.9);
+}
