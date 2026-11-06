@@ -35,7 +35,7 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const title = `${site.name} — ${site.role}`;
+const title = `${site.name}: ${site.summary}`;
 const description = `${site.summary} ${site.status}.`;
 
 export const metadata: Metadata = {
