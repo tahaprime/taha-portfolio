@@ -12,7 +12,7 @@ import zlib from "node:zlib";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "out");
-const port = Number(process.argv[2] ?? process.env.PORT ?? 4173);
+const port = Number(process.argv[2] ?? process.env.PORT ?? 80);
 
 if (!fs.existsSync(root)) {
   console.error("out/ not found. Run `npm run build` first.");
