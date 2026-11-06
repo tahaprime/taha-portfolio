@@ -1,9 +1,23 @@
 import { site } from "@/content/site";
+import { competitions, experience } from "@/content/experience";
+import { projects } from "@/content/projects";
 import { Reveal } from "@/components/fx/Reveal";
 import { Plate } from "@/components/fx/Plate";
 import styles from "./About.module.css";
 
+/** Headline figures are computed from the content files, so they can never go stale. */
+function stats() {
+  const nComp: number = competitions.length;
+  const internships = experience.filter((e) => /intern/i.test(e.role)).length;
+  return [
+    ...(internships ? [{ value: String(internships), label: internships === 1 ? "Internship" : "Internships" }] : []),
+    { value: String(projects.length), label: projects.length === 1 ? "Project" : "Projects" },
+    ...(nComp ? [{ value: String(nComp), label: nComp === 1 ? "Competition" : "Competitions" }] : []),
+  ];
+}
+
 export function About() {
+  const { portrait } = site;
   return (
     <section id="about" className="section" aria-labelledby="about-title">
       <div className="container">
@@ -15,12 +29,13 @@ export function About() {
 
           <Reveal mode="fade" className={styles.portrait} data-plate-host="">
             <Plate
-              src="/portrait.webp"
-              alt={`Portrait of ${site.name}`}
+              src={portrait.src}
+              alt={portrait.alt}
               ratio="4 / 5"
-              width={960}
-              height={1200}
-              objectPosition="50% 20%"
+              width={900}
+              height={1125}
+              objectPosition={portrait.position}
+              gray={portrait.treatment === "mono"}
             />
           </Reveal>
 
@@ -38,7 +53,7 @@ export function About() {
             ))}
 
             <dl className={styles.stats}>
-              {site.stats.map((s) => (
+              {stats().map((s) => (
                 <div key={s.label}>
                   <dt className="mono muted">{s.label}</dt>
                   <dd>{s.value}</dd>

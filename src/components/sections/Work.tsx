@@ -4,10 +4,6 @@ import { ProjectCard } from "@/components/project/ProjectCard";
 import { TransitionLink } from "@/components/shell/TransitionLink";
 import styles from "./Work.module.css";
 
-// Hand-placed editorial rhythm: alternating wide and tall frames.
-// 5:4 only for the centred compositions (ReservENSAM, MEDACCESS); wide ones keep the full 3:2.
-const RATIOS = ["3 / 2", "3 / 2", "5 / 4", "3 / 2", "5 / 4", "3 / 2"];
-
 export function Work() {
   return (
     <section id="work" className="section" aria-labelledby="work-title">
@@ -27,7 +23,7 @@ export function Work() {
         <ul className={styles.grid}>
           {featuredProjects.map((p, i) => (
             <li key={p.slug} className={styles.item} data-i={i}>
-              <ProjectCard project={p} ratio={RATIOS[i % RATIOS.length]} priority={i < 2} />
+              <ProjectCard project={p} ratio={p.ratio ?? "3 / 2"} priority={i < 2} />
             </li>
           ))}
         </ul>

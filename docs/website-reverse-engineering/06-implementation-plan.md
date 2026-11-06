@@ -98,22 +98,30 @@ Payload (home): JS 238 KB gz in 10 files, CSS 8 KB gz, fonts 112 KB, portrait 31
 ## 6. Known limitations and next steps
 
 1. **Case-study LCP 2.9 s (mobile, throttled).** Stable across runs; synchronous image decode did not change it. Hypothesis: rasterising the pattern-heavy SVG figure on a 4× slowed CPU. Fix path: pre-render the cover plates to WebP in `build-figures.mjs` (`sharp` is already a dev dependency).
-2. **CV:** place your PDF in `public/cv/` and rebuild; the button appears automatically. Until then the footer shows only GitHub and LinkedIn.
-3. **To confirm with the owner:** the headline figures carried over from the previous portfolio (3+ years, 5+ AI projects, 10+ full-stack projects), the AI Health Assistant metrics (87% / 4.2/5), Pyramid's wording (GitHub says "online banking system", the brief says "personal finance"), location text ("Morocco"), and the default URL `https://tahableu.me` (`NEXT_PUBLIC_SITE_URL`). The phone number is deliberately not published.
-4. **SkillsMatch and CodePoster** have no source facts beyond the brief; add them to `src/content/projects.ts` (and a plate in `build-figures.mjs`) when details exist.
+2. **CV:** `public/cv/Taha_HOUMMADI_CV_ENG.pdf` is in place, so the download link is live. The PDF contains a phone number, so the file is publicly downloadable with it.
+3. **To confirm with the owner:** the LinkedIn URL (`site.ts` uses `taha-hoummadi-bleu`, the CV says `taha-hoummadi`); Pyramid's wording (GitHub says "online banking system", the brief says "personal finance"); MEDACCESS and DEVJEM are kept although the new CV omits them (delete or set `featured: false` if unwanted); the ENSAM Campus Apps stack is the union of the CV and the earlier ReservENSAM note (Node.js, Express.js, React.js, JWT, MongoDB, MySQL); the start date "February 2027" comes from the CV. The phone number is deliberately not displayed on the site.
+4. **CodePoster** has no source facts beyond the original brief; add it with `npm run new:project` when details exist.
 5. **Reference limits:** REA has no hover/scroll/touch primitives (Playwright filled that gap); the reference's Barba transition stalled in headless Chromium, so its curtain timing comes from source/CSS.
 6. **Bundle floor:** ≈ 160 KB gz of the 238 KB is React + the Next runtime. Cutting further means a different framework (e.g. Astro), not tuning.
 7. The AI-generated concept images on the previous portfolio were not reused (they are renders with garbled text, not screenshots). Real screenshots can be added as extra gallery slides in `projects/[slug]/page.tsx`.
 
-## 7. Maintenance cheat-sheet
+## 7. Maintenance (updated after the CV update)
+
+All editing is documented in [`src/content/README.md`](../../src/content/README.md). In short:
 
 | Task | Where |
 |---|---|
-| Edit copy, links, status, stats | `src/content/site.ts` |
-| Add / edit a project (card, case study, index) | `src/content/projects.ts` (+ a plate in `scripts/build-figures.mjs`, then `npm run figures`) |
-| Skills, experience, education, competitions | `src/content/skills.ts`, `src/content/experience.ts` |
-| Colours, type scale, spacing | `src/styles/tokens.css` |
-| Motion constants (durations, glyphs) | `src/lib/motion.ts`; WebGL feel: top of `src/lib/distortion.ts` |
-| Change the domain | `NEXT_PUBLIC_SITE_URL` at build time |
-| Deploy | Any static host: build command `npm run build`, output directory `out` (e.g. Cloudflare Pages) |
-| OG image | Re-capture the hero at 1200×630 with reduced motion → `src/app/opengraph-image.png` (+ `twitter-image.png`) |
+| Availability (PFE, duration, start), About, links, photo | `src/content/site.ts` |
+| Experience, education, competitions | `src/content/experience.ts` |
+| Projects (add, hide, reorder, real screenshots, diagrams) | `src/content/projects.ts`, `npm run new:project`, `npm run images` |
+| Skills | `src/content/skills.ts` |
+| CV | PDF in `public/cv/` |
+| Colours, type | `src/styles/tokens.css` |
+| Validate / build | `npm run check` / `npm run build` (the check runs first and fails with plain-English errors) |
+| Deploy | any static host (build `npm run build`, output `out`), or the repo's Dockerfile (Node 20) |
+
+Build-time scripts load the typed content through the TypeScript compiler (`scripts/lib/content.mjs`), so they run on Node 20 inside Docker; content files must stay import-free.
+
+### Update log
+
+- **2026-11-06, CV update:** availability changed to a PFE internship of 3 to 6 months (from February 2027, per the CV); Capgemini Engineering internship added (SkillsMatch case study); VoyageENSAM added and ReservENSAM merged into "ENSAM Campus Apps" with real screenshots; Under-Train Inspection Robot (SafeTrack) updated; official CV photo used as the portrait; skills mirror the CV; hackathon RALLY-AI added; headline figures are now computed from the content instead of typed in.

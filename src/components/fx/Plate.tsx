@@ -14,6 +14,10 @@ type Props = {
   objectPosition?: string;
   /** Pointer distortion (hover-capable, motion-allowed devices only). */
   interactive?: boolean;
+  /** "cover" fills the frame; "contain" shows the whole image (screenshots). */
+  fit?: "cover" | "contain";
+  /** Tonal black & white treatment, applied identically to the image and the WebGL texture. */
+  gray?: boolean;
   width?: number;
   height?: number;
   className?: string;
@@ -33,6 +37,8 @@ export function Plate({
   priority = false,
   objectPosition = "50% 50%",
   interactive = true,
+  fit = "cover",
+  gray = false,
   width = 1200,
   height = 800,
   className = "",
@@ -41,7 +47,8 @@ export function Plate({
   const img = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    if (!interactive) return;
+    // "contain" frames show the whole image, which the cover-fit shader would crop: no distortion.
+    if (!interactive || fit === "contain") return;
     const el = plate.current;
     const image = img.current;
     if (!el || !image) return;
@@ -86,10 +93,15 @@ export function Plate({
       host.removeEventListener("pointerleave", leave);
       fx?.release();
     };
-  }, [interactive]);
+  }, [interactive, fit]);
 
   return (
-    <div ref={plate} className={`${styles.plate} ${className}`} style={{ aspectRatio: ratio }}>
+    <div
+      ref={plate}
+      className={`${styles.plate} ${className}`}
+      style={{ aspectRatio: ratio }}
+      data-gray={gray ? "" : undefined}
+    >
       {/* Pre-sized static SVG/WebP: next/image's optimiser is unavailable in a static export. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -101,7 +113,7 @@ export function Plate({
         loading={priority ? "eager" : "lazy"}
         decoding="async"
         fetchPriority={priority ? "high" : undefined}
-        style={{ objectPosition }}
+        style={{ objectPosition, objectFit: fit, filter: gray ? "grayscale(1) contrast(1.06)" : undefined }}
       />
       {fig ? (
         <span className={`mono ${styles.fig}`} aria-hidden="true">

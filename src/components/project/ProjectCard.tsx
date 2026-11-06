@@ -1,4 +1,4 @@
-import type { Project } from "@/content/projects";
+import { coverOf, type Project } from "@/content/projects";
 import { Reveal } from "@/components/fx/Reveal";
 import { Plate } from "@/components/fx/Plate";
 import { TransitionLink } from "@/components/shell/TransitionLink";
@@ -12,10 +12,11 @@ export const pad = (n: number) => String(n).padStart(2, "0");
  * accessible name is just the project title), while the card itself hosts the
  * pointer listeners for the image distortion. The plate is decorative here.
  */
-export function ProjectCard({ project: p, ratio, priority = false }: { project: Project; ratio: string; priority?: boolean }) {
+export function ProjectCard({ project: p, ratio, priority = false }: { project: Project & { index: number }; ratio: string; priority?: boolean }) {
+  const cover = coverOf(p);
   return (
     <Reveal as="article" mode="fade" className={styles.card} data-plate-host="">
-      <Plate src={`/figures/${p.figure}.svg`} alt="" fig={pad(p.index)} ratio={ratio} priority={priority} />
+      <Plate src={cover.src} alt="" fig={cover.generated ? pad(p.index) : undefined} ratio={ratio} priority={priority} fit="cover" />
       <div className={styles.meta}>
         <span className="mono muted">Project /{pad(p.index)}</span>
         <span className="mono muted">{p.tags.join(" — ")}</span>

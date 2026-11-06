@@ -36,6 +36,7 @@ uniform sampler2D uTex;
 uniform sampler2D uField;
 uniform vec2 uScale;
 uniform float uAmount;
+uniform float uGray;
 void main() {
   vec2 f = texture(uField, vUv).rg;
   vec2 uv = (vUv - 0.5) * uScale + 0.5;
@@ -43,7 +44,10 @@ void main() {
   float r = texture(uTex, uv - d * 1.00).r;
   float g = texture(uTex, uv - d * 0.80).g;
   float b = texture(uTex, uv - d * 0.60).b;
-  outColor = vec4(r, g, b, 1.0);
+  vec3 col = vec3(r, g, b);
+  float l = dot(col, vec3(0.299, 0.587, 0.114));
+  col = mix(col, (vec3(l) - 0.5) * 1.06 + 0.5, uGray);
+  outColor = vec4(col, 1.0);
 }`;
 
 type Tex = { tex: WebGLTexture; aspect: number };
@@ -58,6 +62,7 @@ class Distortion {
   private uField: WebGLUniformLocation | null;
   private uScale: WebGLUniformLocation | null;
   private uAmount: WebGLUniformLocation | null;
+  private uGray: WebGLUniformLocation | null;
 
   private host: HTMLElement | null = null;
   private current: Tex | null = null;
@@ -110,6 +115,7 @@ class Distortion {
     this.uField = gl.getUniformLocation(this.program, "uField");
     this.uScale = gl.getUniformLocation(this.program, "uScale");
     this.uAmount = gl.getUniformLocation(this.program, "uAmount");
+    this.uGray = gl.getUniformLocation(this.program, "uGray");
     gl.uniform1i(this.uTex, 0);
     gl.uniform1i(this.uField, 1);
     gl.uniform1f(this.uAmount, AMOUNT);
@@ -212,6 +218,7 @@ class Distortion {
 
     const plateAspect = rect.width / rect.height;
     gl.useProgram(this.program);
+    gl.uniform1f(this.uGray, host.dataset.gray !== undefined ? 1 : 0);
     gl.uniform2f(
       this.uScale,
       tex.aspect > plateAspect ? plateAspect / tex.aspect : 1,

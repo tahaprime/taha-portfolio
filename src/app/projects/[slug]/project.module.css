@@ -133,3 +133,23 @@
     justify-self: center;
   }
 }
+
+.highlights {
+  display: grid;
+  gap: 14px;
+  max-width: 46em;
+}
+.highlights li {
+  position: relative;
+  padding-left: 1.3em;
+  color: var(--ink-2);
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+}
+.highlights li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-family: var(--font-label);
+}

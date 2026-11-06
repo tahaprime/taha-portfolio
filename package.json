@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-content.mjs && next build",
     "start": "node scripts/serve.mjs",
     "preview": "node scripts/serve.mjs",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "figures": "node scripts/build-figures.mjs"
+    "figures": "node scripts/build-figures.mjs",
+    "check": "node scripts/check-content.mjs",
+    "images": "node scripts/optimize-images.mjs",
+    "new:project": "node scripts/new-project.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

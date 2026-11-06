@@ -15,7 +15,7 @@ export function Hero() {
       <div className={styles.frame}>
         <div className={styles.labels}>
           <Reveal as="p" mode="scramble" hold={false} className="mono muted">
-            Software Engineering student
+            {site.positioning}
           </Reveal>
           <Reveal as="p" mode="scramble" hold={false} className="mono muted" delay={0.1}>
             {`${site.school.name} — ${site.school.track}`}

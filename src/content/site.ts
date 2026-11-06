@@ -1,24 +1,37 @@
 /**
- * Site-wide facts. Source of truth: the owner's previous portfolio (tahableu.me),
- * github.com/tahaprime and the brief. Nothing here is invented; edit freely.
+ * PROFILE & SITE-WIDE TEXT: edit this file to change who you are, what you are looking
+ * for, how to reach you, your photo and the About copy. See src/content/README.md.
+ * Keep this file self-contained (no imports): the build checks read it directly.
  */
+
+// What you are looking for. These fields feed the hero pill, the footer, the About text
+// and the page descriptions, so you only change them here.
+const availability = {
+  kind: "PFE internship",
+  duration: "3 to 6 months",
+  start: "February 2027",
+  focus: "AI/ML or backend engineering",
+};
+
 export const site = {
   name: "Taha Hoummadi",
   firstName: "Taha",
   lastName: "Hoummadi",
   role: "Software Engineer",
   tagline: "I build systems, not just code.",
-  positioning: "Full-stack · Backend · Intelligent systems",
+  positioning: "AI & Intelligent Systems · Backend / Full-Stack Development",
   summary:
-    "Engineering student in Software Engineering & Intelligent Systems. Building intelligent full-stack solutions with AI integration.",
+    "Software engineering student at ENSAM Meknès (Intelligent Systems), building AI-powered applications with LLM/RAG, optimisation and full-stack development.",
   blurb:
-    "I build systems, not just code: full-stack products, backend services and intelligent systems with AI integrated from the first line.",
-  status: "Available for a PFA internship",
+    "I build systems, not just code: AI-powered applications with LLM/RAG and optimisation, on solid backend and full-stack foundations.",
+  availability,
+  /** One line used in the hero pill, footer and meta description. */
+  status: `Seeking a ${availability.kind} · ${availability.duration} · from ${availability.start}`,
   school: { name: "ENSAM Meknès", track: "GI-ILSI", long: "Software Engineering & Intelligent Systems" },
   location: {
     country: "Morocco",
     city: "Meknès",
-    // Decorative readout; Meknès city centre.
+    // Decorative readout in the hero (Meknès city centre).
     lat: 33.8935,
     lon: -5.5473,
     timeZone: "Africa/Casablanca",
@@ -27,23 +40,30 @@ export const site = {
   contact: {
     email: "tahahoummadi@gmail.com",
     github: "https://github.com/tahaprime",
-    linkedin: "https://linkedin.com/in/taha-hoummadi",
+    linkedin: "https://linkedin.com/in/taha-hoummadi-bleu",
   },
   languages: [
     { name: "Arabic", level: "Native" },
     { name: "French", level: "B2" },
     { name: "English", level: "B2" },
   ],
+  /**
+   * Your photo. Put the original in assets-src/ (e.g. assets-src/profile.jpg), run
+   * `npm run images`, and point `src` at the result.
+   * treatment: "mono" = tonal black & white to match the design, "color" = original colours.
+   * position: CSS object-position used when the frame crops the photo.
+   */
+  portrait: {
+    src: "/images/profile.webp",
+    alt: "Portrait of Taha Hoummadi",
+    treatment: "mono" as "mono" | "color",
+    position: "50% 25%",
+  },
+  /** About section paragraphs, one string each. */
   about: [
-    "I'm an engineering student at ENSAM Meknès, specializing in Software Engineering & Intelligent Systems (GI-ILSI). I'm passionate about building web applications and intelligent systems, and about integrating AI into practical solutions.",
-    "My work spans real-time web applications with Laravel and React.js, MLOps pipelines for facial-emotion detection with TensorFlow and OpenCV, and IoT projects that connect Arduino sensors to FastAPI backends, containerized with Docker Compose.",
-    "I'm now looking for a final-year internship (PFA) where I can apply and deepen these skills in a stimulating professional environment.",
-  ],
-  // Figures carried over from the previous portfolio: confirm before publishing.
-  stats: [
-    { value: "3+", label: "Years coding" },
-    { value: "5+", label: "AI projects" },
-    { value: "10+", label: "Full-stack projects" },
+    "I'm a software engineering student at ENSAM Meknès (GI-ILSI, Intelligent Systems), building AI-powered applications with LLM/RAG, optimisation and full-stack development.",
+    "At Capgemini Engineering (CasaNearshore) I architected SkillsMatch, an internal AI platform that recommends the optimal team for client projects: FastAPI, React, PostgreSQL, ChromaDB and OR-Tools, secured with JWT, RBAC and human approval for any agent action that changes data. Before that: a real-time correspondence platform with Laravel at SRM Oujda, an MLOps pipeline for emotion recognition, and the dashboard of an IoT inspection robot for Al Boraq trains.",
+    `I'm now looking for a ${availability.kind} of ${availability.duration}, starting ${availability.start}, in ${availability.focus}.`,
   ],
 } as const;
 

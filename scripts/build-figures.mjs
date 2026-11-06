@@ -10,12 +10,17 @@
  * marks). They contain NO text on purpose, so they render identically as <img>,
  * as a WebGL texture, and as an Open Graph asset, and they are never screenshots.
  *
+ * Which plates exist is driven by src/content/projects.ts: every project with a `figure` and no
+ * `cover` image gets one. Projects without a hand-drawn plate below get a generated generic one,
+ * so adding a project never needs drawing code.
+ *
  * Run: npm run figures
  */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+import { loadContent } from "./lib/content.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const figDir = path.join(root, "public", "figures");
@@ -145,52 +150,6 @@ function safetrack(r) {
     const h = 10 + r() * 46;
     s += rect(60 + i * 37, 774 - h, 5, h, { fill: h > 48 ? BLUE : INK, op: h > 48 ? 1 : 0.7 });
   }
-  return s;
-}
-
-// ---- 2. ReservENSAM: weekly booking matrix ----------------------------------
-function reservensam(r) {
-  const x0 = 170;
-  const y0 = 130;
-  const cw = 145;
-  const rh = 56;
-  const cols = 6;
-  const rows = 10;
-  let s = "";
-  for (let i = 0; i <= cols; i++) s += line(x0 + i * cw, y0, x0 + i * cw, y0 + rows * rh, INK, 1.2, 0.3);
-  for (let j = 0; j <= rows; j++) s += line(x0, y0 + j * rh, x0 + cols * cw, y0 + j * rh, INK, 1.2, j % 2 ? 0.16 : 0.3);
-  for (let i = 0; i < cols; i++) s += rect(x0 + i * cw + 10, y0 - 34, cw - 20, 10, { fill: INK, op: i === 2 ? 1 : 0.55 });
-  for (let j = 0; j < rows; j++) s += line(x0 - (j % 2 ? 10 : 22), y0 + j * rh + rh / 2, x0 - 4, y0 + j * rh + rh / 2, INK, 1.6, 0.6);
-
-  const taken = [];
-  const free = [];
-  for (let c = 0; c < cols; c++) {
-    let j = Math.floor(r() * 2);
-    while (j < rows - 1) {
-      const len = 1 + Math.floor(r() * 3);
-      if (j + len > rows) break;
-      taken.push({ c, j, len });
-      j += len + 1 + Math.floor(r() * 2);
-    }
-    if (j < rows - 1) free.push({ c, j, len: 1 });
-  }
-  taken.forEach((t, n) => {
-    const x = x0 + t.c * cw + 8;
-    const y = y0 + t.j * rh + 7;
-    const w = cw - 16;
-    const h = t.len * rh - 14;
-    if (n % 7 === 3) s += rect(x, y, w, h, { fill: BLUE, rx: 6 });
-    else if (n % 7 === 5) s += rect(x, y, w, h, { fill: "none", stroke: INK, rx: 6, sw: 2 }) + line(x + 8, y + 8, x + w - 8, y + h - 8, INK, 1.2, 0.35);
-    else s += rect(x, y, w, h, { fill: INK, rx: 6, op: 0.92 });
-  });
-  const g = free[Math.min(2, free.length - 1)] ?? { c: 3, j: 6 };
-  const gx = x0 + g.c * cw + 8;
-  const gy = y0 + g.j * rh + 7;
-  s += rect(gx, gy, cw - 16, rh * 2 - 14, { stroke: BLUE, dash: "7 6", rx: 6, sw: 2.4 });
-  s += cross(gx + (cw - 16) / 2, gy + rh - 7, 11, BLUE, 2.4);
-
-  const nowX = x0 + 3.62 * cw;
-  s += line(nowX, y0 - 22, nowX, y0 + rows * rh + 20, BLUE, 2.2) + circle(nowX, y0 - 22, 6, { fill: BLUE });
   return s;
 }
 
@@ -360,12 +319,86 @@ function pyramid(r) {
   return s;
 }
 
-const figures = { safetrack, reservensam, "health-assistant": health, "mlops-emotion": mlops, medaccess, pyramid };
-for (const [name, draw] of Object.entries(figures)) {
+// ---- SkillsMatch: roles matched to candidates under budget / headcount constraints ----
+function skillsmatch(r) {
+  let s = "";
+  const roles = [190, 320, 450, 580];
+  const cands = Array.from({ length: 8 }, (_, i) => 140 + i * 74);
+  const picks = new Map([[0, 1], [1, 4], [2, 6], [3, 2]]); // role -> chosen candidate
+  const chosen = new Set(picks.values());
+  roles.forEach((y, i) =>
+    cands.forEach((cy, j) => {
+      const sel = picks.get(i) === j;
+      if (sel || r() < 0.38) s += line(196, y, 520, cy, sel ? BLUE : INK, sel ? 3.2 : 1.2, sel ? 1 : 0.26);
+    }),
+  );
+  roles.forEach((y) => {
+    s += rect(120, y - 26, 76, 52, { fill: PAPER, stroke: INK, rx: 9, sw: 2.4 });
+    s += rect(134, y - 9, 40, 8, { fill: INK, rx: 4 }) + rect(134, y + 5, 26, 7, { fill: INK, rx: 3.5, op: 0.45 });
+  });
+  cands.forEach((cy, j) => {
+    const sel = chosen.has(j);
+    s += circle(540, cy, sel ? 21 : 14, { fill: sel ? BLUE : PAPER, stroke: sel ? BLUE : INK, sw: 2.4 });
+    s += rect(580, cy - 5, 44 + r() * 100, 10, { fill: sel ? BLUE : INK, rx: 5, op: sel ? 0.9 : 0.25 + r() * 0.3 });
+  });
+  // constraint panel
+  const px = 800;
+  s += rect(px, 130, 300, 540, { stroke: INK, rx: 18, sw: 2.6 }) + rect(px + 24, 156, 90, 12, { fill: BLUE, rx: 6 });
+  s += rect(px + 24, 214, 252, 16, { stroke: INK, rx: 8, sw: 2 }) + rect(px + 24, 214, 176, 16, { fill: INK, rx: 8 });
+  for (let i = 0; i < 4; i++) s += circle(px + 54 + i * 64, 306, 20, { fill: BLUE }) + circle(px + 54 + i * 64, 306, 7, { fill: PAPER });
+  for (let i = 0; i < 4; i++) s += circle(px + 54 + i * 64, 378, 20, { stroke: INK, sw: 2, dash: "4 5" });
+  for (let rr = 0; rr < 4; rr++) for (let c = 0; c < 6; c++) s += rect(px + 24 + c * 44, 450 + rr * 34, 34, 24, { fill: INK, rx: 5, op: r() < 0.2 ? 0.9 : 0.1 + r() * 0.12 });
+  s += circle(px + 150, 622, 26, { fill: BLUE }) + poly([[px + 138, 622], [px + 147, 632], [px + 164, 610]], { stroke: PAPER, sw: 4 });
+  return s;
+}
+
+// ---- generic plate: used for any project without a hand-drawn one ----------------
+function generic(r) {
+  let s = "";
+  const cols = 4;
+  const rows = 3;
+  const nodes = [];
+  for (let c = 0; c < cols; c++)
+    for (let rr = 0; rr < rows; rr++) nodes.push({ c, rr, x: 200 + c * 260 + (r() - 0.5) * 60, y: 190 + rr * 170 + (r() - 0.5) * 50 });
+  const at = (c, rr) => nodes.find((n) => n.c === c && n.rr === rr);
+  const path = [Math.floor(r() * rows)];
+  for (let c = 1; c < cols; c++) path.push(Math.max(0, Math.min(rows - 1, path[c - 1] + Math.floor(r() * 3) - 1)));
+  for (let c = 0; c < cols - 1; c++)
+    for (let rr = 0; rr < rows; rr++) {
+      const rr2 = Math.max(0, Math.min(rows - 1, rr + Math.floor(r() * 3) - 1));
+      const a = at(c, rr);
+      const b = at(c + 1, rr2);
+      s += line(a.x + 60, a.y, b.x - 60, b.y, INK, 1.4, 0.28);
+    }
+  for (let c = 0; c < cols - 1; c++) {
+    const a = at(c, path[c]);
+    const b = at(c + 1, path[c + 1]);
+    s += line(a.x + 60, a.y, b.x - 60, b.y, BLUE, 3.2);
+  }
+  nodes.forEach((n) => {
+    const hot = path[n.c] === n.rr;
+    s += rect(n.x - 60, n.y - 32, 120, 64, { fill: hot ? BLUE : PAPER, stroke: hot ? BLUE : INK, rx: 12, sw: 2.4 });
+    s += rect(n.x - 38, n.y - 8, 76, 9, { fill: hot ? PAPER : INK, rx: 4.5, op: 0.9 }) + rect(n.x - 38, n.y + 10, 44 + r() * 20, 8, { fill: hot ? PAPER : INK, rx: 4, op: 0.45 });
+  });
+  s += cross(120, 120, 12, INK, 1.8);
+  for (let i = 0; i < 30; i++) {
+    const h = 10 + r() * 44;
+    s += rect(60 + i * 37, 774 - h, 5, h, { fill: h > 46 ? BLUE : INK, op: h > 46 ? 1 : 0.7 });
+  }
+  return s;
+}
+
+const custom = { safetrack, skillsmatch, "health-assistant": health, "mlops-emotion": mlops, medaccess, pyramid };
+const { allProjectEntries } = await loadContent("projects");
+const wanted = [...new Set(allProjectEntries.filter((p) => p.figure && !p.cover).map((p) => p.figure))];
+for (const name of wanted) {
+  const draw = custom[name] ?? generic;
   const svg = frame(draw(rng(seedOf(name))));
   fs.writeFileSync(path.join(figDir, `${name}.svg`), svg);
-  console.log(`✓ public/figures/${name}.svg  (${(svg.length / 1024).toFixed(1)} KB)`);
+  console.log(`✓ public/figures/${name}.svg  (${(svg.length / 1024).toFixed(1)} KB${custom[name] ? "" : ", generic"})`);
 }
+const known = new Set(wanted);
+for (const f of fs.readdirSync(figDir)) if (f.endsWith(".svg") && !known.has(f.slice(0, -4))) console.log(`! public/figures/${f} is not used by any project (safe to delete)`);
 
 // ---- favicon + touch icon -----------------------------------------------------
 const markSvg = (bg) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">

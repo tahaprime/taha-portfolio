@@ -12,17 +12,17 @@ npm run lint && npm run typecheck
 
 ## Editing content
 
-Everything the site says lives in `src/content/`:
+Everything the site says lives in `src/content/`, and you never need to touch a component. **Read [`src/content/README.md`](src/content/README.md)**: it has a recipe for each task (availability, About, experience, projects, photo, CV, skills).
 
-| File | What |
-|---|---|
-| `site.ts` | Name, role, status, contact links, about copy, headline figures |
-| `projects.ts` | Projects: summary, stack, metrics, links, conceptual diagram |
-| `skills.ts`, `experience.ts` | Skill groups; experience, education, competitions |
+```bash
+npm run dev                                   # live preview
+npm run check                                 # validates content, tells you what to fix
+npm run new:project -- my-slug "My Project"   # scaffold a hidden draft project
+npm run images                                # optimise originals from assets-src/ into public/images/
+npm run figures                               # regenerate generated project illustrations
+```
 
-Add your CV by putting a PDF in `public/cv/` and rebuilding: the download link appears automatically (and never exists without a file). Set `NEXT_PUBLIC_SITE_URL` to your domain at build time (default `https://tahableu.me`).
-
-Project plates are generated artwork: edit `scripts/build-figures.mjs`, then `npm run figures`.
+`npm run build` runs the content check first, so a missing image, a broken link or leftover placeholder text stops the build with a plain-English message instead of reaching the live site. The CV download appears when a PDF exists in `public/cv/`. Set `NEXT_PUBLIC_SITE_URL` to your domain at build time (default `https://tahableu.me`).
 
 ## Deploying
 

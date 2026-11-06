@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { projectBySlug, projects } from "@/content/projects";
+import { coverOf, projectBySlug, projects } from "@/content/projects";
 import { Reveal } from "@/components/fx/Reveal";
 import { Plate } from "@/components/fx/Plate";
 import { Diagram } from "@/components/project/Diagram";
@@ -20,11 +20,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const p = projectBySlug(slug);
   if (!p) return {};
+  const cover = coverOf(p);
   return {
     title: p.title,
     description: `${p.subtitle}. ${p.summary}`,
     alternates: { canonical: `/projects/${p.slug}/` },
-    openGraph: { title: `${p.title} — Taha Hoummadi`, description: p.summary, url: `/projects/${p.slug}/` },
+    openGraph: {
+      title: `${p.title} — Taha Hoummadi`,
+      description: p.summary,
+      url: `/projects/${p.slug}/`,
+      // SVG illustrations are not valid social images; real covers are. Otherwise the site image is used.
+      ...(cover.generated ? {} : { images: [{ url: cover.src, alt: cover.alt }] }),
+    },
   };
 }
 
@@ -36,12 +43,37 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const i = projects.findIndex((x) => x.slug === slug);
   const prev = projects[(i - 1 + projects.length) % projects.length];
   const next = projects[(i + 1) % projects.length];
+  const cover = coverOf(p);
 
   const facts: [string, string][] = [
     ["Status", p.status],
     ...(p.year ? ([["Period", p.year]] as [string, string][]) : []),
+    ...(p.role ? ([["Role", p.role]] as [string, string][]) : []),
     ...(p.context ? ([["Context", p.context]] as [string, string][]) : []),
     ["Focus", p.tags.join(" — ")],
+  ];
+
+  // Gallery: the cover, then your extra images, then the conceptual diagram.
+  const slides = [
+    {
+      id: "cover",
+      label: cover.caption ?? (cover.generated ? `Fig. ${pad(p.index)} — generated illustration` : "Screenshot"),
+      node: <Plate src={cover.src} alt={cover.alt} ratio="3 / 2" priority fit={cover.fit ?? "cover"} />,
+    },
+    ...(p.gallery ?? []).map((g, n) => ({
+      id: `g${n}`,
+      label: g.caption ?? `Image ${n + 2}`,
+      node: <Plate src={g.src} alt={g.alt} ratio="3 / 2" fit={g.fit ?? "contain"} />,
+    })),
+    ...(p.diagram
+      ? [
+          {
+            id: "diagram",
+            label: `Fig. ${pad(p.index)}b — ${p.diagram.caption}`,
+            node: <Diagram diagram={p.diagram} title={p.title} />,
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -59,20 +91,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </header>
 
       <section className="container" aria-label="Figures">
-        <PlateGallery
-          slides={[
-            {
-              id: "cover",
-              label: `Fig. ${pad(p.index)} — generated illustration`,
-              node: <Plate src={`/figures/${p.figure}.svg`} alt={p.figureAlt} ratio="3 / 2" priority />,
-            },
-            {
-              id: "diagram",
-              label: `Fig. ${pad(p.index)}b — ${p.diagram.caption}`,
-              node: <Diagram diagram={p.diagram} title={p.title} />,
-            },
-          ]}
-        />
+        <PlateGallery slides={slides} />
       </section>
 
       <section className={`container grid12 ${styles.body}`}>
@@ -99,6 +118,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </li>
               ))}
             </ul>
+          ) : null}
+
+          {p.highlights?.length ? (
+            <div className={styles.block}>
+              <h2 className="mono muted">What I built</h2>
+              <ul className={styles.highlights}>
+                {p.highlights.map((h) => (
+                  <li key={h}>{h}</li>
+                ))}
+              </ul>
+            </div>
           ) : null}
 
           <div className={styles.block}>

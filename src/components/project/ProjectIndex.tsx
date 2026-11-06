@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { Project } from "@/content/projects";
+import { coverOf, type Project } from "@/content/projects";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { FINE_POINTER, motionAllowed } from "@/lib/env";
 import { useMediaQuery } from "@/lib/useMediaQuery";
@@ -16,7 +16,7 @@ import styles from "./ProjectIndex.module.css";
  * pieces scatters in behind the cursor: the cover plate, a detail crop and a spec card.
  * Hover-capable devices only; touch users simply get the list.
  */
-export function ProjectIndex({ items }: { items: Project[] }) {
+export function ProjectIndex({ items }: { items: (Project & { index: number })[] }) {
   const [active, setActive] = useState<string | null>(null);
   // Last project shown: kept after the pointer leaves so the cluster can fade out with its content.
   const [shownSlug, setShownSlug] = useState<string | null>(null);
@@ -80,11 +80,11 @@ export function ProjectIndex({ items }: { items: Project[] }) {
           {shown ? (
             <>
               <div data-pv="" className={`${styles.pv} ${styles.pvA}`}>
-                <Plate src={`/figures/${shown.figure}.svg`} alt="" ratio="4 / 3" interactive={false} />
+                <Plate src={coverOf(shown).src} alt="" ratio="4 / 3" interactive={false} />
               </div>
               <div data-pv="" className={`${styles.pv} ${styles.pvB}`}>
                 <Plate
-                  src={`/figures/${shown.figure}.svg`}
+                  src={coverOf(shown).src}
                   alt=""
                   ratio="1 / 1"
                   interactive={false}

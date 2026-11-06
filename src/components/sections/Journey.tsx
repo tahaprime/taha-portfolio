@@ -1,8 +1,17 @@
 import { competitions, education, experience } from "@/content/experience";
 import { Reveal } from "@/components/fx/Reveal";
+import { TransitionLink } from "@/components/shell/TransitionLink";
 import styles from "./Journey.module.css";
 
-type Row = { period: string; title: string; org: string; detail?: readonly string[] | string; tags?: readonly string[] };
+type Row = {
+  period: string;
+  title: string;
+  org: string;
+  detail?: readonly string[] | string;
+  tags?: readonly string[];
+  /** optional case-study link */
+  href?: string;
+};
 
 function Block({ label, rows }: { label: string; rows: readonly Row[] }) {
   return (
@@ -26,6 +35,13 @@ function Block({ label, rows }: { label: string; rows: readonly Row[] }) {
                 </ul>
               ) : null}
               {r.tags?.length ? <p className="mono faint">{r.tags.join(" · ")}</p> : null}
+              {r.href ? (
+                <p>
+                  <TransitionLink href={r.href} className="link mono">
+                    Read the case study →
+                  </TransitionLink>
+                </p>
+              ) : null}
             </div>
           </Reveal>
         ))}
@@ -41,6 +57,7 @@ export function Journey() {
     org: `${e.org} · ${e.unit}`,
     detail: e.points,
     tags: e.stack,
+    href: "projectSlug" in e && e.projectSlug ? `/projects/${e.projectSlug}/` : undefined,
   }));
   const edu: Row[] = education.map((e) => ({ period: e.period, title: e.title, org: e.org, detail: e.status }));
   const comp: Row[] = competitions.map((c) => ({ period: c.period, title: c.title, org: c.org, detail: c.detail }));

@@ -43,3 +43,7 @@ next-env.d.ts
 # Third-party analysis captures (screenshots of the reference site). They are kept for
 # private analysis and are not meant to be published; remove this line to include them.
 /docs/website-reverse-engineering/assets/ref/
+
+# Original, unoptimised images (the optimised WebP copies live in public/images and are committed).
+/assets-src/*
+!/assets-src/README.md
